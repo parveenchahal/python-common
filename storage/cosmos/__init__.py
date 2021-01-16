@@ -9,7 +9,7 @@ def create_database_container_if_not_exists(
     from azure.cosmos.exceptions import CosmosHttpResponseError
     from azure.cosmos import CosmosClient, PartitionKey
     from http import HTTPStatus
-    from common import exceptions
+    from ... import exceptions
 
     client_list = client_builder.get_clients()
     retries = len(client_list)

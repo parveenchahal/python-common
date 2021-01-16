@@ -5,8 +5,8 @@ from typing import List
 import copy
 from threading import RLock
 from .models._certificate import Certificate
-from common.utils import parse_json, to_json_string
-from common.key_vault import KeyVaultSecret
+from ..utils import parse_json, to_json_string
+from ..key_vault import KeyVaultSecret
 
 class CertificateFromKeyvault(CertificateHandler):
 

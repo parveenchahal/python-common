@@ -1,5 +1,5 @@
-from common.storage import Storage
-from common import Model
+from ..storage import Storage
+from .. import Model
 from .models import StorageEntryModel
 from threading import RLock
 

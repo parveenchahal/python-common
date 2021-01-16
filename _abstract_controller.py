@@ -1,6 +1,6 @@
 from flask_restful import Resource, ResponseBase as _Response
 from logging import Logger
-from common.utils import to_json_string
+from .utils import to_json_string
 
 
 class Controller(Resource):

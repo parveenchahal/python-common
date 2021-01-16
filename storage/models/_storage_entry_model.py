@@ -1,4 +1,4 @@
-from common import Model
+from ... import Model
 from dataclasses import dataclass
 
 @dataclass

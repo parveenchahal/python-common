@@ -1,7 +1,7 @@
 from threading import RLock
 from azure.cosmos import CosmosClient, DatabaseProxy, ContainerProxy
-from common.key_vault import KeyVaultSecret
-from common.utils import parse_json
+from ...key_vault import KeyVaultSecret
+from ...utils import parse_json
 from typing import Tuple
 
 class CosmosClientBuilderFromKeyvaultSecret(object):

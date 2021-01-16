@@ -1,6 +1,6 @@
 from requests import request
-from common.utils import parse_json
-from common import AADToken
+from ..utils import parse_json
+from .. import AADToken
 
 class KeyVaultSecret(object):
 

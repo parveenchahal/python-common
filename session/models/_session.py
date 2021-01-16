@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import copy
 from datetime import datetime
-from common import Model
+from ... import Model
 from dataclasses import dataclass
 
 

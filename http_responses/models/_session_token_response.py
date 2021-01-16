@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from common import Model as _Model
+from ... import Model as _Model
 
 @dataclass
 class SessionTokenResponse(_Model):

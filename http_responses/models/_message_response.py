@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from common import Model as _Model
+from ... import Model as _Model
 from http import HTTPStatus
 
 @dataclass

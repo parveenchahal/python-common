@@ -1,11 +1,11 @@
 from datetime import datetime
-from common.crypto.jwt import JWTHandler
-from common.session.models import Session
+from ..crypto.jwt import JWTHandler
+from ..session.models import Session
 from logging import Logger
 import functools
 from flask import request
-from common import exceptions
-from common import http_responses
+from .. import exceptions
+from .. import http_responses
 
 class _SessionValidator(object):
 

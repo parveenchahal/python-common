@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from .models import StorageEntryModel
-from common import Model
+from .. import Model
 from typing import List
 
 class Storage():

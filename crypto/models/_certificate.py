@@ -1,6 +1,6 @@
 from base64 import b64decode as _b64decode
-from common.utils import string_to_bytes, parse_json
-from common import Model
+from ...utils import string_to_bytes, parse_json
+from ... import Model
 from typing import Dict
 from dataclasses import dataclass
 

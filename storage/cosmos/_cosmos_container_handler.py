@@ -3,10 +3,10 @@ from threading import RLock
 from ._cosmos_client_builder import CosmosClientBuilderFromKeyvaultSecret
 from azure.cosmos import ContainerProxy
 from typing import List, Tuple
-from common.storage import Storage
-from common.storage.models import StorageEntryModel
-from common import Model
-from common import exceptions
+from ...storage import Storage
+from ...storage.models import StorageEntryModel
+from ... import Model
+from ... import exceptions
 from azure.cosmos.exceptions import CosmosResourceNotFoundError, CosmosAccessConditionFailedError, CosmosHttpResponseError
 from azure.core import MatchConditions
 from http import HTTPStatus

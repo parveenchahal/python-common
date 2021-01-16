@@ -1,5 +1,5 @@
 from requests import get as _http_get
-from common.utils import parse_json
+from .utils import parse_json
 from requests.exceptions import ConnectionError as _ConnectionError
 
 

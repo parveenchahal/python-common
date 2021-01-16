@@ -2,7 +2,7 @@ from ._abstract_response import Response
 from typing import Union, List, Text, Mapping, Sequence, Optional
 from http import HTTPStatus
 import json
-from common import Model
+from .. import Model
 
 class JSONResponse(Response):
 
