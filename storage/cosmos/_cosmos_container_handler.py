@@ -29,7 +29,7 @@ class CosmosContainerHandler(Storage):
         self._cache_timeout = cache_timeout
         self._lock = RLock()
 
-    def get(self, id: str, partition_key: str, model_for_data: Model) -> StorageEntryModel:
+    def get(self, id: str, partition_key: str) -> StorageEntryModel:
         client_list = self._get_clients()
         retries = len(client_list)
         for client in client_list:
@@ -46,14 +46,14 @@ class CosmosContainerHandler(Storage):
             entry = StorageEntryModel(**{
                 'id': data['id'],
                 'partition_key': data['partition_key'],
-                'data': model_for_data.from_dict(model_for_data, data),
+                'data': data,
                 'etag': data.get('_etag', '*')
             })
             return entry
         raise exceptions.ShouldNotHaveReachedHereError()
     
     def add_or_update(self, storage_entry: StorageEntryModel):
-        body = storage_entry.data.to_dict()
+        body = storage_entry.data
         body['id'] = storage_entry.id
         body['partition_key'] = storage_entry.partition_key
 

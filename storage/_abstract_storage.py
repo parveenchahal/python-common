@@ -1,11 +1,10 @@
 from abc import abstractmethod
 from .models import StorageEntryModel
-from .. import Model
 from typing import List
 
 class Storage():
     @abstractmethod
-    def get(self, id: str, partition_key: str, model_for_data: Model) -> StorageEntryModel:
+    def get(self, id: str, partition_key: str) -> StorageEntryModel:
         raise NotImplementedError()
     
     @abstractmethod

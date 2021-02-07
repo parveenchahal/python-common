@@ -1,5 +1,4 @@
 from ..storage import Storage
-from .. import Model
 from .models import StorageEntryModel
 from threading import RLock
 
@@ -13,7 +12,7 @@ class InMemoryDictStorage(Storage):
         self._lock = RLock()
         self._dict = {}
 
-    def get(self, id: str, partition_key: str, model_for_data: Model) -> StorageEntryModel:
+    def get(self, id: str, partition_key: str) -> StorageEntryModel:
         with self._lock:
             return self._dict[partition_key][id]
     

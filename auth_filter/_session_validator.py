@@ -50,12 +50,9 @@ def init_session_validator(logger: Logger, jwt_handler: JWTHandler):
 def _validate_session(f, ignore_refresh_expiry, *args, **kwargs):
     session_token: str = None
     try:
-        session_token = request.headers['Authorization']
+        session_token = request.headers['Session']
     except KeyError:
         return http_responses.UnauthorizedResponse("Session token not found in request.")
-    if not session_token.startswith('Bearer'):
-        return http_responses.UnauthorizedResponse("Bearer scheme is missing in Authorization header.")
-    session_token = session_token.split(' ', 1)[1]
     res = _session_validator.validate(session_token, ignore_refresh_expiry)
     if res is None:
         return f(*args, **kwargs)

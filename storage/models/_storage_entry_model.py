@@ -4,6 +4,6 @@ from dataclasses import dataclass
 @dataclass
 class StorageEntryModel(Model):
     id: str
-    data: Model
+    data: dict
     partition_key: str
     etag: str = '*'
