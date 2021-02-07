@@ -1,7 +1,8 @@
 import json
 import copy
 from base64 import b64encode, b64decode
-from typing import Any
+from typing import Any, TypeVar
+T = TypeVar('T')
 
 def bytes_to_string(b: bytes) -> str:
     return b.decode('UTF-8', errors='strict')
@@ -32,11 +33,11 @@ def decode_base64(data, altchars: bytes=None) -> str:
 def parse_json(json_string: str):
     return json.loads(json_string)
 
-def json_to_obj(cls, json_string: str) -> Any:
+def json_to_obj(cls: T, json_string: str) -> T:
     j = parse_json(json_string)
     return cls(**j)
 
-def dict_to_obj(cls, d: dict) -> Any:
+def dict_to_obj(cls: T, d: dict) -> T:
     keys = list(cls.__dataclass_fields__)
     new_dict = {}
     for key in keys:
