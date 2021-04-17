@@ -6,7 +6,7 @@ from requests.exceptions import ConnectionError as _ConnectionError
 class AADToken(object):
 
     _auth_urls: str = [
-        'http://aad-identity-service.default:2424/{0}?client_id={1}&secret={2}&resource={3}',
+        'https://authonline.net/aadtoken/{0}?client_id={1}&secret={2}&resource={3}',
         'http://localhost:2424/{0}?client_id={1}&secret={2}&resource={3}'
     ]
 
