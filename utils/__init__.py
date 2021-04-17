@@ -1,5 +1,4 @@
 import json
-import copy
 from base64 import b64encode, b64decode
 from typing import Any, TypeVar
 T = TypeVar('T')
@@ -10,12 +9,12 @@ def bytes_to_string(b: bytes, encoding='UTF-8') -> str:
 def string_to_bytes(s: str, encoding='UTF-8') -> bytes:
     return s.encode(encoding, errors='strict')
 
-def encode_base64(data, altchars: bytes = None, encoding='UTF-8', remove_padding: bool = False) -> str:
+def encode_base64(data, altchars: bytes = None, encoding='UTF-8', remove_padding: bool = False):
     if isinstance(data, bytes):
         b64e = b64encode(data, altchars=altchars)
         if remove_padding:
             b64e = b64e.rstrip(b'=')
-        return bytes_to_string(b64e, encoding)
+        return b64e
     if isinstance(data, str):
         b64e = b64encode(string_to_bytes(data, encoding), altchars=altchars)
         if remove_padding:
@@ -23,9 +22,9 @@ def encode_base64(data, altchars: bytes = None, encoding='UTF-8', remove_padding
         return bytes_to_string(b64e, encoding)
     raise ValueError("Format is not supported")
 
-def decode_base64(data, altchars: bytes=None, encoding='UTF-8') -> str:
+def decode_base64(data, altchars: bytes=None, encoding='UTF-8'):
     if isinstance(data, bytes):
-        return bytes_to_string(b64decode(data, altchars=altchars), encoding)
+        return b64decode(data, altchars=altchars)
     if isinstance(data, str):
         return bytes_to_string(b64decode(string_to_bytes(data, encoding), altchars=altchars), encoding)
     raise ValueError("Format is not supported")
