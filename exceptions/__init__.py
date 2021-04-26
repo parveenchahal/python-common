@@ -23,3 +23,7 @@ class IncorrectValue(Exception): pass
 class KeyvaultOperationFailed(Exception): pass
 
 class KeyvaultSecretNotFoundError(Exception): pass
+
+class KeyNotFoundInCacheError(Exception): pass
+
+class SetCacheError(Exception): pass
