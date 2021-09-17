@@ -12,9 +12,10 @@ class Cache(object):
     def get(self, key: str):
         raise NotImplementedError()
 
-    def set(self, key: str, value: str):
+    def set(self, key: str, value: str, ttl: timedelta = None):
         raise NotImplementedError()
 
-    def _get_key(self, key):
-        namespace = self._namespace
-        return f'{key}-{namespace}'
+    def _format_key(self, key):
+        if self._namespace is not None:
+            return f'{key}-{self._namespace}'
+        return key

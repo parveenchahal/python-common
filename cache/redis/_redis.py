@@ -1,6 +1,6 @@
 from datetime import timedelta
 from .._cache import Cache
-from redis.client import Redis
+from redis import Redis
 from ...exceptions import KeyNotFoundInCacheError, SetCacheError
 
 class RedisCache(Cache):
@@ -12,6 +12,7 @@ class RedisCache(Cache):
         self._client = client
 
     def get(self, key: str):
+        key = self._format_key(key)
         result = self._client.get(key)
         if result is not None:
             return result
@@ -20,6 +21,7 @@ class RedisCache(Cache):
     def set(self, key: str, value: str, ttl: timedelta = None):
         if ttl is None:
             ttl = self._default_ttl
+        key = self._format_key(key)
         done = self._client.set(key, value, ex=ttl)
         if not done:
             raise SetCacheError()
