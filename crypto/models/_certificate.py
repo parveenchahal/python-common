@@ -1,5 +1,5 @@
 from base64 import b64decode as _b64decode
-from ...utils import string_to_bytes, parse_json
+from ...utils import parse_json
 from ... import Model
 from typing import Dict
 from dataclasses import dataclass
@@ -13,7 +13,7 @@ class Certificate(Model):
     def from_json_string(cls, json_data: str):
         d:Dict[str] = parse_json(json_data)
         bd = {
-            'private_key': _b64decode(string_to_bytes(d['key'])),
-            'certificate': _b64decode(string_to_bytes(d['crt']))
+            'private_key': _b64decode(d['key']),
+            'certificate': _b64decode(d['crt'])
         }
         return cls(**bd)

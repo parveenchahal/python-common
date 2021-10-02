@@ -7,33 +7,27 @@ from threading import RLock
 from .models._certificate import Certificate
 from ..utils import parse_json, to_json_string
 from ..key_vault import KeyVaultSecret
+from ..cache import Cache, CacheDecorator
 
 class CertificateFromKeyvault(CertificateHandler):
 
     _key_vault_secret: KeyVaultSecret
-    _cached_secret: List[Certificate]
-    _next_read: datetime
-    _cache_timeout: timedelta
-    _lock: RLock
+    _cache: CacheDecorator
 
-    def __init__(self, key_vault_secret: KeyVaultSecret, cache_timeout: timedelta):
+    def __init__(self, key_vault_secret: KeyVaultSecret, cache: Cache = None):
         self._key_vault_secret = key_vault_secret
-        self._cached_secret = None
-        self._cache_timeout = cache_timeout
-        self._next_read = None
-        self._lock = RLock()
+        if cache is not None:
+            self._cache = CacheDecorator(cache)
 
-    def _update_required(self, now):
-        return self._cached_secret is None or self._next_read is None or now >= self._next_read
+    def _get(self):
+        if self._cache is not None:
+            @self._cache.cache()
+            def wrapper():
+                return self._key_vault_secret.get()
+            return wrapper()
+        return self._key_vault_secret.get()
 
     def get(self) -> List[Certificate]:
-        now = datetime.utcnow()
-        if self._update_required(now):
-            with self._lock:
-                if self._update_required(now):
-                    secret = self._key_vault_secret.get()
-                    cert_list = parse_json(secret)
-                    cert_list = [Certificate.from_json_string(Certificate, to_json_string(x)) for x in cert_list]
-                    self._cached_secret = cert_list
-                    self._next_read = now + self._cache_timeout
-        return copy.deepcopy(self._cached_secret)
+        secret = self._get()
+        cert_list = parse_json(secret)
+        return [Certificate.from_json_string(Certificate, to_json_string(x)) for x in cert_list]
