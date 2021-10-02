@@ -1,2 +1,5 @@
 redis
 jwt
+Flask
+requests
+azure-cosmos
