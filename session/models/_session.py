@@ -1,9 +1,6 @@
 from dataclasses import dataclass
-import copy
 from datetime import datetime
 from ... import Model
-from dataclasses import dataclass
-
 
 @dataclass
 class Session(Model):
@@ -18,8 +15,7 @@ class Session(Model):
     sqn: int
     
     def to_dict(self) -> dict:
-        d = super().to_dict(True)
-        return d
+        return super().to_dict(True)
 
     @property
     def is_expired(self) -> bool:

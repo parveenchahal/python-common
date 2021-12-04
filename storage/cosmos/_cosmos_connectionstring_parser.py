@@ -11,7 +11,7 @@ class CosmosConnectionStringParser(object):
             s = CosmosConnectionStringParser._convert_to_dict(secondary_connection_string)
         try:
             self._url = p['AccountEndpoint']
-        except:
+        except KeyError:
             raise ValueError('AccountEndpoint not found in primary_connection_string')
         try:
             self._primary_key = p['AccountKey']
@@ -19,7 +19,7 @@ class CosmosConnectionStringParser(object):
                 self._secondary_key = s['AccountKey']
             else:
                 self._secondary_key = None
-        except:
+        except KeyError:
             raise ValueError('AccountKey not found in atleast one of the connection_string')
 
     @staticmethod

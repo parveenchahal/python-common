@@ -1,15 +1,15 @@
 from datetime import datetime, timedelta
-from threading import RLock
-from ._cosmos_client_builder import CosmosClientBuilderFromKeyvaultSecret
-from azure.cosmos import ContainerProxy
 from typing import List, Tuple
+from threading import RLock
+from http import HTTPStatus
+from azure.core import MatchConditions
+from azure.cosmos import ContainerProxy
+from azure.cosmos.exceptions import CosmosResourceNotFoundError, \
+                                    CosmosAccessConditionFailedError, CosmosHttpResponseError
+from ._cosmos_client_builder import CosmosClientBuilderFromKeyvaultSecret
 from ...storage import Storage
 from ...storage.models import StorageEntryModel
-from ... import Model
 from ... import exceptions
-from azure.cosmos.exceptions import CosmosResourceNotFoundError, CosmosAccessConditionFailedError, CosmosHttpResponseError
-from azure.core import MatchConditions
-from http import HTTPStatus
 
 
 class CosmosContainerHandler(Storage):
@@ -22,7 +22,12 @@ class CosmosContainerHandler(Storage):
     _cached_container_clients: Tuple[ContainerProxy]
     _lock: RLock
 
-    def __init__(self, database_name: str, container_name: str, client_builder: CosmosClientBuilderFromKeyvaultSecret, cache_timeout: timedelta):
+    def __init__(
+        self,
+        database_name: str,
+        container_name: str,
+        client_builder: CosmosClientBuilderFromKeyvaultSecret,
+        cache_timeout: timedelta):
         self._database_name = database_name
         self._container_name = container_name
         self._client_builder = client_builder
@@ -61,7 +66,10 @@ class CosmosContainerHandler(Storage):
         retries = len(client_list)
         for client in client_list:
             try:
-                client.upsert_item(body=body, etag=storage_entry.etag, match_condition=MatchConditions.IfNotModified)
+                client.upsert_item(
+                    body=body,
+                    etag=storage_entry.etag,
+                    match_condition=MatchConditions.IfNotModified)
             except CosmosAccessConditionFailedError:
                 raise exceptions.EtagMismatchError()
             except CosmosHttpResponseError as e:
@@ -79,7 +87,9 @@ class CosmosContainerHandler(Storage):
         if self._update_required(now):
             with self._lock:
                 if self._update_required(now):
-                    self._cached_container_clients = self._client_builder.get_container_clients(self._database_name, self._container_name)
+                    self._cached_container_clients = self._client_builder.get_container_clients(
+                        self._database_name,
+                        self._container_name)
                     self._next_read = now + self._cache_timeout
         return self._cached_container_clients
 

@@ -1,13 +1,17 @@
 from datetime import timedelta
-from .._cache import Cache
 from redis import Redis
+from .._cache import Cache
 from ...exceptions import KeyNotFoundInCacheError, SetCacheError
 
 class RedisCache(Cache):
 
     _client: Redis
 
-    def __init__(self, client: Redis, default_ttl: timedelta = timedelta(days=1), namespace: str = None) -> None:
+    def __init__(
+        self,
+        client: Redis,
+        default_ttl: timedelta = timedelta(days=1),
+        namespace: str = None) -> None:
         super().__init__(namespace, default_ttl)
         self._client = client
 

@@ -10,7 +10,11 @@ class JWTHandler(object):
     _sig_verify_key_handler: KeyHandler
     _alg: str
 
-    def __init__(self, signing_key_handler: KeyHandler, sig_verify_key_handler: KeyHandler, alg: str = "RS256"):
+    def __init__(
+        self,
+        signing_key_handler: KeyHandler,
+        sig_verify_key_handler: KeyHandler,
+        alg: str = "RS256"):
         self._signing_key_handler = signing_key_handler
         self._sig_verify_key_handler = sig_verify_key_handler
         self._alg = alg
@@ -29,7 +33,8 @@ class JWTHandler(object):
             for key in key_list:
                 exception_occured = None
                 try:
-                    payload = self._jwt.decode(token, key, algorithms=self._alg, do_time_check=False)
+                    payload = self._jwt.decode(
+                        token, key, algorithms=self._alg, do_time_check=False)
                 except Exception as ex:
                     exception_occured = ex
             if exception_occured is None:

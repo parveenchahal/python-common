@@ -1,7 +1,9 @@
 import copy
-from .utils import json_to_obj as _json_to_obj, to_json_string as _to_json_string, dict_to_obj as _dict_to_obj
 from typing import Any
 from dataclasses import dataclass
+from .utils import json_to_obj as _json_to_obj, \
+                    to_json_string as _to_json_string, \
+                    dict_to_obj as _dict_to_obj
 
 @dataclass
 class Model(object):

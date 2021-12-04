@@ -38,6 +38,7 @@ class CacheDecorator(object):
     def cache_method(self, ttl: timedelta = None, serializer=None, deserializer=None):
         def wrapper(f):
             def inner(class_instance, *args, **kwargs):
-                return self.__cache(f, class_instance, ttl, serializer, deserializer, *args, **kwargs)
+                return self.__cache(
+                    f, class_instance, ttl, serializer, deserializer, *args, **kwargs)
             return inner
         return wrapper

@@ -1,9 +1,5 @@
-from ._certificate_handler import CertificateHandler
-from requests import get as http_get, request
-from datetime import datetime, timedelta
 from typing import List
-import copy
-from threading import RLock
+from ._certificate_handler import CertificateHandler
 from .models._certificate import Certificate
 from ..utils import parse_json, to_json_string
 from ..key_vault import KeyVaultSecret
