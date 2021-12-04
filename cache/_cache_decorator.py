@@ -20,12 +20,21 @@ class CacheDecorator(object):
                 res = f(*args, **kwargs)
             else:
                 res = f(class_instance, *args, **kwargs)
+
+            serialized_res = res
             if serializer is not None:
-                res = serializer(res)
+                serialized_res = serializer(res)
+
             if ttl is None:
-                self._cache.set(key, json.dumps({'v': res}))
+                self._cache.set(key, json.dumps({'v': serialized_res}))
             else:
-                self._cache.set(key, json.dumps({'v': res}), ttl=ttl)
+                self._cache.set(key, json.dumps({'v': serialized_res}), ttl=ttl)
+            return res
+        except Exception:
+            if class_instance is None:
+                res = f(*args, **kwargs)
+            else:
+                res = f(class_instance, *args, **kwargs)
             return res
 
     def cached(self, ttl: timedelta = None, serializer=None, deserializer=None):
