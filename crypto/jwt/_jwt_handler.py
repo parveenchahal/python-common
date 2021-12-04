@@ -1,6 +1,6 @@
 from jwt import JWT
-from ._key_handler import KeyHandler
 from jwt.utils import b64decode as _b64decode
+from ._key_handler import KeyHandler
 from ...utils import bytes_to_string, parse_json
 from ... import exceptions
 

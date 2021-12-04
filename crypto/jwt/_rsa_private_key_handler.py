@@ -1,11 +1,8 @@
+from typing import List
 from jwt.jwk import AbstractJWKBase, RSAJWK, jwk_from_pem
 from .._certificate_handler import CertificateHandler
 from ._key_handler import KeyHandler
-from typing import List
 
-class Caching(object):
-    def __init__(self):
-        pass
 
 class RSAPrivateKeyHandler(KeyHandler):
 
