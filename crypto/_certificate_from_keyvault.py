@@ -17,7 +17,7 @@ class CertificateFromKeyvault(CertificateHandler):
 
     def _get(self):
         if self._cache is not None:
-            @self._cache.cache()
+            @self._cache.cached()
             def wrapper():
                 return self._key_vault_secret.get()
             return wrapper()

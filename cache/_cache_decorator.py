@@ -28,14 +28,14 @@ class CacheDecorator(object):
                 self._cache.set(key, json.dumps({'v': res}), ttl=ttl)
             return res
 
-    def cache(self, ttl: timedelta = None, serializer=None, deserializer=None):
+    def cached(self, ttl: timedelta = None, serializer=None, deserializer=None):
         def wrapper(f):
             def inner(*args, **kwargs):
                 return self.__cache(f, None, ttl, serializer, deserializer, *args, **kwargs)
             return inner
         return wrapper
 
-    def cache_method(self, ttl: timedelta = None, serializer=None, deserializer=None):
+    def cached_method(self, ttl: timedelta = None, serializer=None, deserializer=None):
         def wrapper(f):
             def inner(class_instance, *args, **kwargs):
                 return self.__cache(
