@@ -1,4 +1,5 @@
 from typing import List
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 from jwt.jwk import AbstractJWKBase, RSAJWK, jwk_from_pem
 from .._certificate_handler import CertificateHandler
 from ._key_handler import KeyHandler
@@ -13,5 +14,5 @@ class RSAPrivateKeyHandler(KeyHandler):
 
     def get(self) -> List[AbstractJWKBase]:
         cert_list = self._certificate_handler.get()
-        key_list = [RSAJWK(jwk_from_pem(cert.private_key)) for cert in cert_list]
+        key_list = [jwk_from_pem(cert.private_key) for cert in cert_list]
         return key_list
