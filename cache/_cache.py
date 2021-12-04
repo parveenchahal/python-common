@@ -12,7 +12,7 @@ class Cache(object):
     def get(self, key: str):
         raise NotImplementedError()
 
-    def set(self, key: str, value: str, ttl: timedelta = None):
+    def set(self, key: str, value: object, ttl: timedelta = None):
         raise NotImplementedError()
 
     def _format_key(self, key):

@@ -11,7 +11,7 @@ class Certificate(Model):
 
     @staticmethod
     def from_json_string(cls, json_data: str):
-        d:Dict[str] = parse_json(json_data)
+        d: Dict[str] = parse_json(json_data)
         bd = {
             'private_key': _b64decode(d['key']),
             'certificate': _b64decode(d['crt'])

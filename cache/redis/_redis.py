@@ -18,7 +18,7 @@ class RedisCache(Cache):
             return result
         raise KeyNotFoundInCacheError()
 
-    def set(self, key: str, value: str, ttl: timedelta = None):
+    def set(self, key: str, value: object, ttl: timedelta = None):
         if ttl is None:
             ttl = self._default_ttl
         key = self._format_key(key)
