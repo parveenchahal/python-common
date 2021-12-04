@@ -1,6 +1,5 @@
 from typing import List
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
-from jwt.jwk import AbstractJWKBase, RSAJWK, jwk_from_pem
+from jwt.jwk import AbstractJWKBase, jwk_from_pem
 from .._certificate_handler import CertificateHandler
 from ._key_handler import KeyHandler
 
