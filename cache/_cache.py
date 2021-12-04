@@ -15,6 +15,9 @@ class Cache(object):
     def set(self, key: str, value: object, ttl: timedelta = None):
         raise NotImplementedError()
 
+    def delete(self, key: str):
+        raise NotImplementedError()
+
     def _format_key(self, key):
         if self._namespace is not None:
             return f'{key}-{self._namespace}'

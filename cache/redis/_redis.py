@@ -29,3 +29,7 @@ class RedisCache(Cache):
         done = self._client.set(key, value, ex=ttl)
         if not done:
             raise SetCacheError()
+
+    def delete(self, key: str) -> bool:
+        key = self._format_key(key)
+        return self._client.delete(key) == 1
