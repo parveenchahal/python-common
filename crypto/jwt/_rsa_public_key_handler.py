@@ -15,7 +15,7 @@ class RSAPublicKeyHandler(KeyHandler):
     def _get_key_obj(self, key: bytes) -> RSAJWK:
         cert = x509.load_pem_x509_certificate(key, default_backend())
         public_key = cert.public_key().public_bytes(Encoding.PEM, PublicFormat.PKCS1)
-        public_key = jwk_from_pem(public_key, default_backend())
+        public_key = jwk_from_pem(public_key)
         return public_key
 
     def get(self) -> List[AbstractJWKBase]:
