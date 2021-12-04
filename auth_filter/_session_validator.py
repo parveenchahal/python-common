@@ -45,7 +45,8 @@ def init_session_validator(logger: Logger, jwt_handler: JWTHandler):
     if _session_validator is None:
         _session_validator = _SessionValidator(logger, jwt_handler)
     else:
-        raise exceptions.CannotBeCalledMoreThanOnceError("init_session_validator can't be called more than once")
+        raise exceptions.CannotBeCalledMoreThanOnceError(
+            "init_session_validator can't be called more than once")
 
 def _validate_session(f, ignore_refresh_expiry, *args, **kwargs):
     session_token: str = None
