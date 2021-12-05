@@ -1,4 +1,5 @@
 from datetime import timedelta
+import json
 from redis import Redis
 from .._cache import Cache
 from ...exceptions import KeyNotFoundInCacheError, SetCacheError
@@ -15,18 +16,26 @@ class RedisCache(Cache):
         super().__init__(namespace, default_ttl)
         self._client = client
 
-    def get(self, key: str):
+    def get(self, key: str, deserializer = None):
         key = self._format_key(key)
         result = self._client.get(key)
-        if result is not None:
-            return result
-        raise KeyNotFoundInCacheError()
+        if result is None:
+            raise KeyNotFoundInCacheError()
+        result = json.loads(result)['v']
+        if deserializer is not None:
+            return deserializer(result)
+        return result
 
-    def set(self, key: str, value: object, ttl: timedelta = None):
+    def set(self, key: str, value: object, ttl: timedelta = None, serializer = None):
         if ttl is None:
             ttl = self._default_ttl
         key = self._format_key(key)
-        done = self._client.set(key, value, ex=ttl)
+        if serializer is not None:
+            value = serializer(value)
+        typ = type(value)
+        if typ not in [str, int, float]:
+            raise TypeError(f'Object type {typ} can\'t be cached. Supported types are (str, int, float)')
+        done = self._client.set(key, json.dumps({'v': value}), ex=ttl)
         if not done:
             raise SetCacheError()
 
