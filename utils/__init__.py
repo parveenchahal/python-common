@@ -1,6 +1,8 @@
 import json
+from typing import TypeVar, Union
+from io import BytesIO
 from base64 import b64encode, b64decode
-from typing import Any, TypeVar
+
 T = TypeVar('T')
 
 def bytes_to_string(b: bytes, encoding='UTF-8') -> str:
@@ -48,3 +50,17 @@ def dict_to_obj(cls: T, d: dict) -> T:
 
 def to_json_string(d: dict) -> str:
     return json.dumps(d)
+
+def chunked(content: Union[bytes, BytesIO], chuck_size: int = 1024):
+    if isinstance(content, bytes):
+        bytes_io = BytesIO(content)
+    else:
+        bytes_io = content
+    try:
+        while True:
+            chunk = bytes_io.read(chuck_size)
+            if not chunk:
+                break
+            yield chunk
+    finally:
+        bytes_io.close()
