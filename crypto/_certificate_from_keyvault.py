@@ -3,21 +3,21 @@ from ._certificate_handler import CertificateHandler
 from .models._certificate import Certificate
 from ..utils import parse_json, to_json_string
 from ..key_vault import KeyVaultSecret
-from ..cache import Cache, CacheDecorator
+from ..cache import Cache, cached
 
 class CertificateFromKeyvault(CertificateHandler):
 
     _key_vault_secret: KeyVaultSecret
-    _cache: CacheDecorator
+    _cache: Cache
 
     def __init__(self, key_vault_secret: KeyVaultSecret, cache: Cache = None):
         self._key_vault_secret = key_vault_secret
         if cache is not None:
-            self._cache = CacheDecorator(cache)
+            self._cache = cache
 
     def _get(self):
         if self._cache is not None:
-            @self._cache.cached()
+            @cached(self._cache)
             def wrapper():
                 return self._key_vault_secret.get()
             return wrapper()
