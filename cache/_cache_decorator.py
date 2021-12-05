@@ -11,10 +11,11 @@ class CacheDecorator(object):
         try:
             key = '-'.join(map(str, args)) + '-'.join([(str(k), str(v)) for k,v in kwargs.items()])
             res = self._cache.get(key)
+            res = json.loads(res)
+            res = res['v']
             if deserializer is not None:
                 res = deserializer(res)
-            res = json.loads(res)
-            return res['v']
+            return res
         except KeyNotFoundInCacheError:
             if class_instance is None:
                 res = f(*args, **kwargs)
