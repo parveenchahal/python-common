@@ -1,6 +1,10 @@
-import json
+import os, json
+from datetime import datetime, timedelta
+from time import sleep
+from typing import TypeVar, Union
+from io import BytesIO
 from base64 import b64encode, b64decode
-from typing import Any, TypeVar
+
 T = TypeVar('T')
 
 def bytes_to_string(b: bytes, encoding='UTF-8') -> str:
@@ -48,3 +52,37 @@ def dict_to_obj(cls: T, d: dict) -> T:
 
 def to_json_string(d: dict) -> str:
     return json.dumps(d)
+
+def chunked(content: Union[bytes, BytesIO], chuck_size: int = 1024):
+    if isinstance(content, bytes):
+        bytes_io = BytesIO(content)
+    else:
+        bytes_io = content
+    try:
+        while True:
+            chunk = bytes_io.read(chuck_size)
+            if not chunk:
+                break
+            yield chunk
+    finally:
+        bytes_io.close()
+
+def wait_until(callback, timeout: timedelta, frequency: timedelta = timedelta(seconds=10)):
+    now = datetime.utcnow()
+    endtime = now + timeout
+    while datetime.utcnow() <= endtime:
+        if callback():
+            return
+        sleep(frequency.total_seconds())
+    raise TimeoutError()
+
+class TempChangeDir(object):
+    def __init__(self, dir) -> None:
+        self._prev = os.getcwd()
+        self._new = dir
+
+    def __enter__(self):
+        os.chdir(self._new)
+
+    def __exit__(self, *args, **kwargs):
+        os.chdir(self._prev)

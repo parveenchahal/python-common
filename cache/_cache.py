@@ -9,10 +9,10 @@ class Cache(object):
         self._namespace = namespace
         self._default_ttl = default_ttl
 
-    def get(self, key: str):
+    def get(self, key: str, deserializer = None):
         raise NotImplementedError()
 
-    def set(self, key: str, value: object, ttl: timedelta = None):
+    def set(self, key: str, value: object, ttl: timedelta = None, serializer = None):
         raise NotImplementedError()
 
     def delete(self, key: str):
