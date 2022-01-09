@@ -68,10 +68,12 @@ class CosmosContainerHandler(Storage):
             except CosmosAccessConditionFailedError:
                 raise exceptions.EtagMismatchError()
             except CosmosHttpResponseError as e:
-                if retries > 1 and e.status_code == HTTPStatus.UNAUTHORIZED:
-                    retries -= 1
-                    continue
-                raise exceptions.Unauthorized(e)
+                if e.status_code == HTTPStatus.UNAUTHORIZED:
+                    if retries > 1:
+                        retries -= 1
+                        continue
+                    raise exceptions.Unauthorized(e)
+                raise
             break
 
     def _get_cached_or_create_clients(self) -> List[ContainerProxy]:
