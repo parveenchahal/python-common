@@ -1,0 +1,1 @@
+AUTH_ONLINE_PUBLIC_CERTIFICATE = 'https://apis.authonline.net/session/public_certificates'

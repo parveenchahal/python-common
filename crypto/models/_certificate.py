@@ -6,8 +6,10 @@ from dataclasses import dataclass
 
 @dataclass
 class Certificate(Model):
-    private_key: bytes
+
     certificate: bytes
+    private_key: bytes = None
+    
 
     @staticmethod
     def from_json_string(cls, json_data: str):

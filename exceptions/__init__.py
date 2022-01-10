@@ -29,3 +29,5 @@ class KeyNotFoundInCacheError(Exception): pass
 class SetCacheError(Exception): pass
 
 class NotFoundError(Exception): pass
+
+class HTTPCallFailedError(Exception): pass
