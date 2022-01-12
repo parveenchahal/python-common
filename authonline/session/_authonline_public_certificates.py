@@ -1,8 +1,7 @@
 from typing import List
 from http import HTTPStatus
-import json
 from requests import get as http_get
-from common.utils import string_to_bytes, decode_base64
+from common.utils import string_to_bytes, decode_base64, parse_json
 from ...constants import AUTH_ONLINE_PUBLIC_CERTIFICATE
 from ...cache import Cache, cached
 from ...crypto._certificate_handler import CertificateHandler
@@ -21,8 +20,9 @@ class AuthonlinePublicCertificatesHandler(CertificateHandler):
     def get(self) -> List[Certificate]:
         if self._cache is not None:
             certs = self._get_cached()
-        certs =  self._get()
-        certs = json.loads(certs)
+        else:
+            certs =  self._get()
+        certs = parse_json(certs)
         return [Certificate(string_to_bytes(decode_base64(cert))) for cert in certs]
 
     def _get(self):
