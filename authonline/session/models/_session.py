@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from ... import Model
+from .... import Model
 
 @dataclass
 class Session(Model):

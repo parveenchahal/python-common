@@ -1,7 +1,7 @@
-from ..crypto.jwt import JWTHandler
+from ...crypto.jwt import JWTHandler
 from .models import Session
 from logging import Logger
-from .. import exceptions
+from ... import exceptions
 
 class SessionValidator(object):
 
@@ -12,7 +12,7 @@ class SessionValidator(object):
         self._logger = logger
         self._jwt_handler = jwt_handler
     
-    def validate(self, session_token: str, ignore_refresh_expiry: bool = False, validation_callback = None):
+    def validate(self, session_token: str, validation_callback = None, ignore_refresh_expiry: bool = False):
         payload = self._jwt_handler.decode(session_token)
         session = Session(**payload)
         if session.is_expired:

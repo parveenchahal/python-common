@@ -31,3 +31,5 @@ class SetCacheError(Exception): pass
 class NotFoundError(Exception): pass
 
 class HTTPCallFailedError(Exception): pass
+
+class SessionRefreshFailed(Exception): pass
