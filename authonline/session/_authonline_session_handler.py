@@ -10,7 +10,7 @@ class AuthOnlineSessionHandler(object):
 
     _logger: Logger
     REFRESH_SESSION_URL = 'https://apis.authonline.net/session/refresh'
-    LOGOUT_SESSION_URL = 'https://apis.authonline.net/session/logout'
+    LOGOUT_SESSION_URL = 'https://apis.authonline.net/logout'
 
     def __init__(self, logger: Logger) -> None:
         self._logger = logger
