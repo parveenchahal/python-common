@@ -1,7 +1,7 @@
 from typing import Tuple
 from azure.cosmos import CosmosClient, DatabaseProxy, ContainerProxy
-from ...key_vault import KeyVaultSecret
-from ...utils import parse_json
+from ....key_vault import KeyVaultSecret
+from ....utils import parse_json
 
 class CosmosClientBuilderFromKeyvaultSecret(object):
 

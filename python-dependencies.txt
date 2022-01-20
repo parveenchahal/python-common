@@ -5,3 +5,4 @@ Flask-RESTful==0.3.9
 requests==2.26.0
 azure-cosmos==4.2.0
 cachetools==4.2.4
+pymongo==4.0.1

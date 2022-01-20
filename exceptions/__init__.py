@@ -33,3 +33,5 @@ class NotFoundError(Exception): pass
 class HTTPCallFailedError(Exception): pass
 
 class SessionRefreshFailed(Exception): pass
+
+class KeyAlreadyExist(Exception): pass

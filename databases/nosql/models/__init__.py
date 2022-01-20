@@ -1,0 +1,1 @@
+from ._database_entry_model import DatabaseEntryModel
