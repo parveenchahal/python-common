@@ -1,5 +1,4 @@
 from logging import Logger
-from select import select
 from pymongo import MongoClient
 
 class MongoDBDatabase:

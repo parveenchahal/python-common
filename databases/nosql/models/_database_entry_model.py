@@ -5,6 +5,6 @@ from dataclasses import dataclass
 @dataclass
 class DatabaseEntryModel(Model):
     data: dict
-    partition_key: Union[str, int, float]
+    partition_key: Union[str, int]
     etag: str = '*'
-    id: str = None
+    id: Union[str, int] = None
