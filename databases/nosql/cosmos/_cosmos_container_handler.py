@@ -51,8 +51,8 @@ class CosmosContainerHandler(DatabaseOperations):
             })
             return entry
         raise exceptions.ShouldNotHaveReachedHereError()
-    
-    def add_or_update(self, db_entry: DatabaseEntryModel):
+
+    def insert_or_update(self, db_entry: DatabaseEntryModel) -> Union[str, int]:
         body = db_entry.data
         body['id'] = db_entry.id
         body['partition_key'] = db_entry.partition_key
