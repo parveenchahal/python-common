@@ -6,8 +6,7 @@ from requests.exceptions import ConnectionError as _ConnectionError
 class AADToken(object):
 
     _auth_urls: str = [
-        'https://authonline.net/aadtoken/{0}?client_id={1}&secret={2}&resource={3}',
-        'http://localhost:2424/{0}?client_id={1}&secret={2}&resource={3}'
+        'https://aadtoken.authonline.net?tenant={0}&client_id={1}&secret={2}&resource={3}'
     ]
 
     def __init__(self, client_id: str, secret: str, resource: str, tenant: str = 'common'):
